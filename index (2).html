@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b5d45">
+<title>羽毛球裁判英語 Umpire English</title>
+<style>
+:root{--g:#0b5d45;--g2:#e8f3ef;--ink:#17211d;--mut:#5d6b65;--bd:#dbe4e0;--bg:#f4f7f5;
+--U:#0b5d45;--P:#b4540a;--LJ:#5a44a0;--SJ:#5a44a0;--ok:#1b8a4b;--bad:#c62828}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+font-family:-apple-system,BlinkMacSystemFont,"PingFang HK","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+button{font-family:inherit}
+/* ---- top bar ---- */
+.top{background:var(--g);color:#fff;position:sticky;top:0;z-index:20;
+padding:calc(8px + env(safe-area-inset-top)) 10px 8px;display:flex;align-items:center;gap:6px}
+.top h1{font-size:17px;margin:0;flex:1;font-weight:700;line-height:1.3;
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ib{border:0;background:rgba(255,255,255,.16);color:#fff;border-radius:10px;
+width:38px;height:38px;font-size:18px;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+.ib.on{background:#fff;color:var(--g)}
+/* ---- panels ---- */
+.panel{background:#fff;border-bottom:1px solid var(--bd);padding:10px 14px;display:none}
+.panel.open{display:block}
+.panel .r{display:flex;align-items:center;gap:8px;margin-bottom:9px;font-size:14px;flex-wrap:wrap}
+.panel .r>span.lb{width:62px;flex:0 0 auto;color:var(--mut)}
+.panel select{font-size:14px;padding:7px 8px;border:1px solid var(--bd);border-radius:8px;background:#fff;flex:1;min-width:0}
+.panel input[type=search]{font-size:16px;padding:9px 11px;border:1px solid var(--bd);border-radius:10px;width:100%}
+.panel .hint{font-size:12px;color:var(--mut);line-height:1.5;margin-top:4px}
+.seg{display:inline-flex;border:1px solid var(--g);border-radius:9px;overflow:hidden;flex:1}
+.seg button{border:0;background:#fff;color:var(--g);padding:8px 4px;font-size:14px;flex:1}
+.seg button.on{background:var(--g);color:#fff;font-weight:700}
+main{max-width:720px;margin:0 auto;padding:12px 12px 90px}
+/* ---- home tiles ---- */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.tile{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:15px 13px;text-align:left;
+display:block;width:100%;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tile .ic{font-size:30px;display:block;margin-bottom:7px;line-height:1}
+.tile .n{display:block;font-size:17px;font-weight:700;color:var(--ink);line-height:1.3}
+.tile .d{display:block;font-size:12px;color:var(--mut);margin-top:5px;line-height:1.45}
+.tile .ct{display:block;font-size:11px;color:var(--g);font-weight:700;margin-top:8px}
+.tile.wide{grid-column:1/3;display:flex;align-items:center;gap:13px;padding:14px}
+.tile.wide .ic{margin:0;font-size:26px}
+.tile.wide .tx{flex:1}
+.lead{font-size:13px;color:var(--mut);line-height:1.6;margin:2px 4px 14px}
+/* ---- list ---- */
+.gh{font-size:13px;font-weight:700;color:var(--g);margin:18px 4px 8px;letter-spacing:.3px}
+.gh:first-child{margin-top:2px}
+.row{background:#fff;border:1px solid var(--bd);border-radius:13px;padding:13px;margin-bottom:9px;
+display:flex;align-items:center;gap:11px;width:100%;text-align:left}
+.row .ic{font-size:23px;flex:0 0 auto}
+.row .tx{flex:1;min-width:0;display:block}
+.row .t{display:block;font-size:16px;font-weight:600;line-height:1.3}
+.row .d{display:-webkit-box;font-size:12px;color:var(--mut);margin-top:3px;line-height:1.4;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.row .ar{color:#b8c4bf;font-size:19px;flex:0 0 auto}
+.row .st{color:#c9a400;font-size:17px;flex:0 0 auto}
+/* ---- detail ---- */
+.card{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:15px;margin-bottom:12px}
+.card h2{font-size:20px;margin:0 0 2px;display:flex;align-items:flex-start;gap:9px}
+.card h2 .tt{flex:1;line-height:1.3}
+.fav{border:0;background:none;font-size:23px;padding:0 2px;color:#c9a400;flex:0 0 auto}
+.scene{background:var(--g2);border-radius:11px;padding:11px 12px;margin:11px 0 4px;font-size:15px;line-height:1.6}
+.line{padding:13px 0;border-top:1px dashed var(--bd)}
+.lh{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.who{font-size:12px;font-weight:700;color:#fff;border-radius:7px;padding:4px 10px}
+.lh .sp{flex:1}
+.b{border:0;border-radius:999px;height:40px;min-width:40px;padding:0 14px;font-size:14px;font-weight:700;
+background:var(--g);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.b.play{width:46px;height:46px;padding:0;font-size:19px;border-radius:50%}
+.b.gh2{background:#fff;color:var(--g);border:2px solid var(--g)}
+.b.on{background:var(--bad);border-color:var(--bad);color:#fff;animation:pl 1s infinite}
+@keyframes pl{50%{opacity:.5}}
+.en{font-size:20px;font-weight:600;line-height:1.4}
+.zh{font-size:14px;color:var(--mut);margin-top:5px;line-height:1.5}
+body.hide-en .en:not(.show){filter:blur(7px)}
+body.hide-zh .zh{display:none}
+.res{margin-top:9px;font-size:15px;line-height:1.65;background:#f7f9f8;border-radius:10px;padding:9px 11px}
+.res .ok{color:var(--ok);font-weight:600}.res .no{color:var(--bad);font-weight:700;text-decoration:underline}
+.res audio{width:100%;margin-top:7px}
+.wide-b{width:100%;margin-top:9px;border:2px solid var(--g);background:#fff;color:var(--g);
+border-radius:12px;padding:12px;font-size:16px;font-weight:700}
+.tip{margin-top:11px;font-size:14px;color:#6b4c00;background:#fff8e0;border-radius:10px;padding:10px 12px;line-height:1.6}
+.nav{display:flex;gap:9px;margin-top:4px}
+.nav button{flex:1;border:1px solid var(--bd);background:#fff;border-radius:12px;padding:12px 8px;
+font-size:14px;color:var(--ink);font-weight:600}
+.nav button:disabled{opacity:.35}
+/* ---- players ---- */
+.evt{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.evt::-webkit-scrollbar{display:none}
+.evt button{flex:0 0 auto;border:1px solid var(--bd);background:#fff;color:var(--ink);
+border-radius:999px;padding:8px 15px;font-size:15px;font-weight:600}
+.evt button.on{background:var(--g);color:#fff;border-color:var(--g)}
+.pl{background:#fff;border:1px solid var(--bd);border-radius:13px;padding:12px 13px;margin-bottom:9px}
+.pl .tx{min-width:0}
+.pl .bar2{display:flex;gap:7px;margin-top:10px;align-items:center}
+.pl .bar2 .sp{flex:1}
+.pl .b{height:38px;font-size:14px}
+.pl .miss{font-size:12px;color:var(--mut);line-height:1.45;margin-top:9px;
+background:#f7f9f8;border-radius:8px;padding:7px 9px}
+.pl .nm{font-size:17px;font-weight:700;line-height:1.3}
+.pl .cc{font-size:11px;font-weight:700;background:var(--g2);color:var(--g);border-radius:5px;
+padding:2px 6px;margin-left:6px;vertical-align:2px;letter-spacing:.5px}
+.pl .ph{font-size:14px;color:var(--g);margin-top:4px;font-weight:600;letter-spacing:.3px}
+.pl .cn{font-size:13px;color:var(--mut);margin-top:2px}
+.note{font-size:13px;color:var(--mut);background:#fff;border:1px solid var(--bd);
+border-radius:12px;padding:11px 13px;margin-bottom:13px;line-height:1.65}
+.empty{text-align:center;color:var(--mut);padding:50px 12px;line-height:1.7;font-size:15px}
+/* ---- tool ---- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.grid2 label,.fw label{font-size:13px;color:var(--mut);display:block;margin-bottom:4px}
+.fw select,.grid2 select{font-size:18px;padding:11px;border-radius:11px;border:1px solid var(--bd);background:#fff;width:100%}
+.out{font-size:25px;font-weight:700;padding:16px;background:var(--g2);border-radius:12px;margin:12px 0;min-height:62px;line-height:1.35}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="ib" id="back" hidden>‹</button>
+  <h1 id="ttl">🏸 裁判英語</h1>
+  <button class="ib" id="bSearch">🔍</button>
+  <button class="ib" id="bSet">⚙️</button>
+</header>
+<div class="panel" id="pSearch"><input type="search" id="q" placeholder="搜尋英文、中文或球員姓名…"></div>
+<div class="panel" id="pSet">
+  <div class="r"><span class="lb">聲音</span><select id="vSel"></select></div>
+  <div class="r"><span class="lb">音調</span><div class="seg" id="segPitch">
+    <button data-v="1">標準</button><button data-v="1.18" class="on">明亮</button><button data-v="1.35">更亮</button></div></div>
+  <div class="r"><span class="lb">語速</span><div class="seg" id="segRate">
+    <button data-v="0.9" class="on">正常</button><button data-v="0.68">慢</button><button data-v="0.5">很慢</button></div></div>
+  <div class="r"><label><input type="checkbox" id="allV"> 顯示全部聲音（含女聲）</label></div>
+  <div class="r"><label><input type="checkbox" id="bEn"> 盲聽模式（先隱藏英文）</label>
+    <label><input type="checkbox" id="bZh" checked> 顯示中文</label></div>
+  <div class="r"><span class="lb">診斷</span><button class="b gh2" id="dBtn">🔊 測試聲音</button>
+    <button class="b gh2" id="dInfo">ℹ️ 檢查</button></div>
+  <div class="hint" id="diag" style="white-space:pre-line"></div>
+  <div class="hint">💡 想要更自然的聲音：iPhone 到「設定 → 輔助使用 → 朗讀內容 → 語音 → 英文」下載 Daniel 或 Arthur 的「增強／優質」版本；Android 到「設定 → 語言與輸入 → 文字轉語音」安裝高品質語音資料。下載後回來重新整理這一頁。</div>
+</div>
+<main id="main"></main>
+<script>
+/* ===== 情境資料 =====
+   用語來源：BWF Statutes 4.1.5 Vocabulary、4.1.1 ITTO、4.1.8 IRS。人名為虛構示範。
+   who: U=裁判 P=球員 LJ=線審 SJ=發球裁判 */
+const SECTIONS=[
+ {id:"flow",ic:"📋",n:"比賽流程",d:"擲球、開場、報分、休息、完賽",
+  g:[["pre","賽前與開場"],["sc","報分"],["iv","休息與換邊"],["end","完賽"]]},
+ {id:"call",ic:"⚖️",n:"場上判決",d:"Fault / Let / Out、線審、推翻判決",
+  g:[["basic","常用短句"],["lj","線審與推翻"],["exp","向球員解釋"]]},
+ {id:"serve",ic:"🏸",n:"發球違例",d:"發球裁判判罰後怎麼說明",
+  g:[["why","判罰說明"],["pos","位置與次序"]]},
+ {id:"irs",ic:"✋",n:"挑戰 IRS",d:"球員挑戰、成功、失敗、故障",
+  g:[["ask","提出挑戰"],["res","挑戰結果"]]},
+ {id:"talk",ic:"🔥",n:"難處理情況",d:"拖延、受傷、教練、黃紅黑牌",
+  g:[["delay","拖延與球具"],["court","場地與受傷"],["coach","教練與干擾"],["card","不當行為與牌"],["misc","其他狀況"]]}
+];
+const WHO={U:"裁判",P:"球員",LJ:"線審",SJ:"發球裁判"};
+
+const CARDS=[
+/* ===== 流程：賽前與開場 ===== */
+{s:"flow",g:"pre",ic:"🪙",t:"賽前擲球",
+ sc:"比賽開始前，你叫雙方球員到裁判椅旁擲硬幣，決定發球權與場地。",
+ l:[["U","Come here for the toss.","請過來擲球。"],
+    ["U","Who will serve?","誰先發球？"],
+    ["U","Choose your end.","請選擇場區。"],
+    ["U","Who will receive?","誰接發球？"]],
+ tip:"記下擲球結果（誰選發球、誰選場地），雙打還要記下誰站右發球區。"},
+{s:"flow",g:"pre",ic:"🎙️",t:"單打開場宣布",
+ sc:"比賽開始前，你站在裁判椅旁，面向場地。說到「on my right」時伸手指向右邊球員，說到「on my left」時指向左邊球員。",
+ l:[["U","Ladies and Gentlemen; on my right, Kenji Tanaka of Japan; and on my left, Anders Holm of Denmark. Tanaka to serve; love all; play.","各位女士先生，我的右邊是日本的田中健二；左邊是丹麥的安德斯·霍爾姆。田中發球；零比零；開始。"]],
+ tip:"分號（;）處稍停。Love all＝0:0。先指右、再指左，抬頭、聲音清晰。「Play」一出口，比賽就正式開始。"},
+{s:"flow",g:"pre",ic:"🎙️",t:"雙打開場宣布",
+ sc:"雙打開始前，要介紹四位球員，並說明誰先發球、發給誰。",
+ l:[["U","Ladies and Gentlemen; on my right, Jonas Berg and Erik Lund of Sweden; and on my left, Park Min-jun and Kim Tae-ho of Korea. Berg to serve to Park; love all; play.","各位女士先生，我的右邊是瑞典的貝里和倫德；左邊是韓國的朴敏俊和金泰浩。貝里發球給朴；零比零；開始。"]],
+ tip:"關鍵句型：「X to serve to Y」＝X 發球給 Y。團體賽要改成報出代表的隊伍名稱。"},
+{s:"flow",g:"pre",ic:"▶️",t:"第二局／決勝局開始",
+ sc:"局間休息結束，球員已就位，準備開始下一局。",
+ l:[["U","Second game; love all; play.","第二局；零比零；開始。"],
+    ["U","Final game; love all; play.","決勝局；零比零；開始。"]],
+ tip:"如果休息期間有球員因行為不當被判 fault，開場說法會不同，請依裁判長指示。"},
+
+/* ===== 流程：報分 ===== */
+{s:"flow",g:"sc",ic:"🔢",t:"一般報分",
+ sc:"每一個回合結束後報分。發球方的分數先報。",
+ l:[["U","Eight, five.","八比五。（發球方八分）"],
+    ["U","Ten all.","十平。"],
+    ["U","Love, one.","零比一。（Love＝0）"],
+    ["U","Seventeen, nineteen.","十七比十九。"]],
+ tip:"同分用 all：Ten all。零分一律說 Love。等球員就位、觀眾聲音靜下來後才報分。"},
+{s:"flow",g:"sc",ic:"🔁",t:"換發球權 Service over",
+ sc:"發球方輸了這個回合，發球權轉到對方。要先說「Service over」，再報分，而且是新發球方的分數先報。",
+ l:[["U","Service over; six, five.","換發球；六比五。（新發球方六分）"]],
+ tip:"順序固定：Service over → 新發球方分數 → 另一方分數。這是最容易報錯的地方。"},
+{s:"flow",g:"sc",ic:"☝️",t:"局點 Game point",
+ sc:"一方到達 20 分，或 29 分時，再多得一分就能贏下這一局。",
+ l:[["U","Twenty game point six.","二十局點，六。"],
+    ["U","Twenty-nine game point twenty-eight.","二十九局點，二十八。"],
+    ["U","Twenty-nine game point all.","二十九局點平。"]],
+ tip:"Game point 緊接在領先方分數之後說出。"},
+{s:"flow",g:"sc",ic:"🏁",t:"賽點 Match point",
+ sc:"一方再得一分就贏得整場比賽。",
+ l:[["U","Twenty match point eight.","二十賽點，八。"],
+    ["U","Twenty-nine match point twenty-eight.","二十九賽點，二十八。"],
+    ["U","Twenty-nine match point all.","二十九賽點平。"]],
+ tip:"同一分既是局點又是賽點時，說 match point。"},
+
+/* ===== 流程：休息與換邊 ===== */
+{s:"flow",g:"iv",ic:"⏸️",t:"11 分休息 Interval",
+ sc:"一方先拿到 11 分，球員有 60 秒休息。報完分後立即說「Interval」。",
+ l:[["U","Eleven, nine; interval.","十一比九；休息。"],
+    ["U","Service over; nine, eleven; interval.","換發球；九比十一；休息。"]],
+ tip:"若剛好同時換發球，順序是：Service over → 分數 → Interval。"},
+{s:"flow",g:"iv",ic:"⏱️",t:"休息倒數 20 秒",
+ sc:"休息時間剩 20 秒。教練必須在你喊出之後離開場地。",
+ l:[["U","Court three, twenty seconds.","三號場，二十秒。"],
+    ["U","Coach, return to your chair.","教練，請回到你的座位。"]],
+ tip:"11 分休息在過了 40 秒時喊；局間休息在過了 100 秒時喊。只有一個場地時可省略「Court …」。"},
+{s:"flow",g:"iv",ic:"🔔",t:"休息後恢復比賽",
+ sc:"休息結束，球員已就位，你要重報比分並叫他們開始。",
+ l:[["U","Are you ready?","你們準備好了嗎？"],
+    ["U","Eleven, nine; play.","十一比九；開始。"]],
+ tip:"「Play」是正式啟動／恢復比賽的指令。"},
+{s:"flow",g:"iv",ic:"↔️",t:"決勝局換邊",
+ sc:"決勝局有一方先到 11 分，球員要換邊。球員有時會忘記。",
+ l:[["U","Eleven, nine; interval, change ends.","十一比九；休息，換邊。"],
+    ["U","Change ends.","請換邊。"],
+    ["U","You did not change ends.","你沒有換邊。"]],
+ tip:"第一局結束、第二局結束也要換邊。發現沒換邊要立刻說出來。"},
+
+/* ===== 流程：完賽 ===== */
+{s:"flow",g:"end",ic:"🏆",t:"第一局結束",
+ sc:"最後一個回合結束，一方贏下第一局。先喊「Game」，再宣布。",
+ l:[["U","Game.","本局結束。"],
+    ["U","First game won by Tanaka of Japan, twenty-one nineteen.","第一局由日本的田中獲勝，二十一比十九。"]],
+ tip:"「Game」要在最後一球之後立刻喊。比分從勝方開始說。"},
+{s:"flow",g:"end",ic:"🏆",t:"第二局結束（一局各一）",
+ sc:"第二局結束，雙方各贏一局。",
+ l:[["U","Game. Second game won by Holm of Denmark, twenty-one seventeen; one game all.","本局結束。第二局由丹麥的霍爾姆獲勝，二十一比十七；一局平。"]],
+ tip:"One game all＝一比一。若第二局由同一人贏下，就直接宣布 Match won by …。"},
+{s:"flow",g:"end",ic:"🏅",t:"比賽結束",
+ sc:"比賽結束，逐局報出比分。",
+ l:[["U","Match won by Tanaka of Japan, twenty-one nineteen, seventeen twenty-one, twenty-one fifteen.","比賽由日本的田中獲勝，二十一比十九，十七比二十一，二十一比十五。"]],
+ tip:"每一局都從勝方角度說：輸掉的那局說成「十七比二十一」。"},
+{s:"flow",g:"end",ic:"🤕",t:"球員退賽",
+ sc:"球員因傷退賽，比賽提前結束。",
+ l:[["U","Are you retiring?","你要退賽嗎？"],
+    ["U","Holm of Denmark retired.","丹麥的霍爾姆退賽。"],
+    ["U","Match won by Tanaka of Japan, twenty-one nineteen, nine twenty-one, five love.","比賽由日本的田中獲勝，二十一比十九，九比二十一，五比零。"]],
+ tip:"要報出已完成的局數與當時比分。"},
+
+/* ===== 判決：常用短句 ===== */
+{s:"call",g:"basic",ic:"📢",t:"最常用的短句",
+ sc:"場上最常用的幾句，聲音要大、要乾脆。",
+ l:[["U","Fault.","犯規。"],["U","Let.","重發球（這球不算）。"],["U","Out.","出界。"],
+    ["U","Play a let.","重打這一球。"],["U","Play.","開始／繼續。"],["U","Play on.","繼續比賽。"]],
+ tip:"Let 之後通常接「Play a let」或直接重新發球。"},
+{s:"call",g:"basic",ic:"🏸",t:"別的場地的球飛入",
+ sc:"另一個場地的球飛進你的場地，打斷了回合。",
+ l:[["U","A shuttle came on the court.","有球飛入場地。"],
+    ["U","Let.","重發球。"],
+    ["U","The shuttle did not distract or obstruct you.","那個球沒有干擾或阻礙你。"]],
+ tip:"鄰場來球不一定自動 Let，要看是否真的影響了球員。"},
+
+/* ===== 判決：線審與推翻 ===== */
+{s:"call",g:"lj",ic:"🙋",t:"請線審／發球裁判再做手勢",
+ sc:"你沒有看清楚線審或發球裁判的手勢，要求他們重做。",
+ l:[["U","Line Judge, signal please.","線審，請做手勢。"],
+    ["U","Line Judge, repeat your signal, please.","線審，請重複你的手勢。"],
+    ["U","Service Judge, signal please.","發球裁判，請做手勢。"],
+    ["LJ","Unsighted.","（線審）我沒看到。"]],
+ tip:"線審做「看不見」手勢時，你要自己判斷；沒把握時可請裁判長協助。"},
+{s:"call",g:"lj",ic:"✏️",t:"推翻線審判決 Overrule",
+ sc:"線審喊出界，但你非常清楚看到球落在界內。只有「毫無合理懷疑」時才推翻。",
+ l:[["U","Correction, in.","更正：界內。"],
+    ["U","Correction, out.","更正：界外。"],
+    ["U","I clearly saw the shuttle land in.","我清楚看到球落在界內。"]],
+ tip:"推翻要立刻喊，之後報分。若這球結束了一局，接著說「Game」。"},
+{s:"call",g:"lj",ic:"🗣️",t:"球員質疑線審（沒有 IRS）",
+ sc:"球員認為線審判錯，走近你或大聲抱怨。你要保持冷靜、簡短、不爭論。",
+ l:[["P","That was in! Are you sure?","那是界內球！你確定嗎？"],
+    ["U","The Line Judge made a correct call.","線審的判決是正確的。"],
+    ["P","He was not looking!","他根本沒在看！"],
+    ["U","Play.","繼續。"]],
+ tip:"重複同一句判決，不要解釋太多、不要辯論。球員持續抱怨可能構成不當行為。"},
+
+/* ===== 判決：向球員解釋 ===== */
+{s:"call",g:"exp",ic:"❓",t:"解釋犯規原因",
+ sc:"你判了 fault，球員問你原因。用最短的句子說明犯規類型。",
+ l:[["P","Why was that a fault?","為什麼那是犯規？"],
+    ["U","You hit the shuttle twice.","你連擊了兩次。"],
+    ["U","You touched the net.","你碰到球網。"],
+    ["U","The shuttle touched you.","球碰到你的身體。"],
+    ["U","You invaded your opponent's court.","你侵入對方場地。"],
+    ["U","You obstructed your opponent.","你阻礙了對手。"],
+    ["U","You slung the shuttle.","你拖帶（甩）球。"],
+    ["U","The shuttle touched the ground before you hit it.","球在你擊中前已落地。"],
+    ["U","The shuttle touched the ceiling.","球碰到天花板。"]],
+ tip:"先喊 Fault，被問到才解釋，一句話講完。"},
+{s:"call",g:"exp",ic:"🎯",t:"干擾與分心",
+ sc:"球員或教練做出干擾對手的行為。",
+ l:[["U","You deliberately distracted your opponent.","你故意干擾對手。"],
+    ["U","Your coach distracted your opponent.","你的教練干擾了對手。"]],
+ tip:"故意干擾屬於犯規，重複發生要進入不當行為程序。"},
+
+/* ===== 發球違例：判罰說明 ===== */
+{s:"serve",g:"why",ic:"🚩",t:"發球違例：向球員說明原因",
+ sc:"發球裁判大聲喊「Fault」並做手勢，你要接著說「Service fault called」加上原因。",
+ l:[["SJ","Fault.","（發球裁判）犯規。"],
+    ["U","Service fault called, too high.","判發球違例：擊球點過高。"],
+    ["U","Service fault called, racket head.","判發球違例：拍頭位置不合規。"],
+    ["U","Service fault called, foot.","判發球違例：腳違規。"],
+    ["U","Service fault called, continuous motion.","判發球違例：動作不連續。"],
+    ["U","Service fault called, base of shuttle.","判發球違例：未先擊中球托。"],
+    ["U","Service fault called, undue delay.","判發球違例：發球不當拖延。"],
+    ["U","Service fault called, shuttle missed.","判發球違例：發球時揮空。"]],
+ tip:"原因用最短的詞即可。球員不懂時配合手勢。"},
+{s:"serve",g:"why",ic:"🦶",t:"發球方／接球方腳犯規",
+ sc:"發球或接球時，有一方腳部違規或拖延。",
+ l:[["U","Fault, server, foot.","犯規，發球方，腳。"],
+    ["U","Fault, receiver, foot.","犯規，接球方，腳。"],
+    ["U","Fault, server, undue delay.","犯規，發球方，不當拖延。"],
+    ["U","Fault, receiver, undue delay.","犯規，接球方，不當拖延。"],
+    ["U","Service fault called, receiver fault called, play a let.","發球違例與接球違例同時發生，重打。"]],
+ tip:"雙方同時犯規＝Let。"},
+
+/* ===== 發球違例：位置與次序 ===== */
+{s:"serve",g:"pos",ic:"📍",t:"站錯發球區／次序錯誤",
+ sc:"球員站錯發球區，或發球、接球次序錯了。",
+ l:[["U","Right service court.","右發球區。"],
+    ["U","Left service court.","左發球區。"],
+    ["U","You served from the wrong service court.","你從錯誤的發球區發球。"],
+    ["U","You served out of turn.","你沒按次序發球。"],
+    ["U","You received out of turn.","你沒按次序接球。"]],
+ tip:"雙打尤其要留意誰該發、誰該接。休息、換邊、擦汗之後最容易出錯。"},
+{s:"serve",g:"pos",ic:"⏳",t:"接球員未準備好",
+ sc:"發球員在接球員還沒準備好時就發球。",
+ l:[["U","Do not serve before the receiver is ready.","接球員未準備好前不要發球。"],
+    ["U","The receiver was not ready.","接球員還沒準備好。"],
+    ["U","Play a let.","重打。"],
+    ["U","You attempted to return the service.","你已嘗試回擊發球（視為已準備）。"]],
+ tip:"若接球員已嘗試回擊，就不能再說自己沒準備好。"},
+{s:"serve",g:"pos",ic:"👥",t:"雙打特殊情況",
+ sc:"雙打時，搭檔之間或擋住視線造成的情況。",
+ l:[["U","You blocked the receiver's view of the shuttle during service.","發球時你擋住了接球員的視線。"],
+    ["U","Both you and your partner hit the shuttle.","你和搭檔同時擊球。"],
+    ["U","Your partner was not ready.","你的搭檔還沒準備好。"],
+    ["U","You missed the shuttle during service.","你發球時揮空。"]],
+ tip:"先喊 Fault，再用一句話說明。"},
+
+/* ===== IRS：提出挑戰 ===== */
+{s:"irs",g:"ask",ic:"✋",t:"球員提出挑戰",
+ sc:"有 IRS 回放系統的場地。線審喊 out，球員立即大喊「Challenge」並舉手。你要複述誰挑戰了什麼判決，並舉起左手。",
+ l:[["LJ","Out.","（線審）出界。"],
+    ["P","Challenge!","挑戰！"],
+    ["U","Park Min-jun challenges, called out.","朴敏俊挑戰，原判：出界。"]],
+ tip:"挑戰必須在球員看到判決後立即提出。複述時要說明原判是 in 還是 out。"},
+{s:"irs",g:"ask",ic:"🤔",t:"確認球員是否要挑戰",
+ sc:"球員對判決有疑問，你需要確認他是否要正式挑戰。",
+ l:[["U","The call is in, do you wish to challenge?","判決是界內，你要挑戰嗎？"],
+    ["U","The call is out, do you wish to challenge?","判決是界外，你要挑戰嗎？"]],
+ tip:"實際使用時機請向裁判長確認。"},
+{s:"irs",g:"ask",ic:"🚫",t:"挑戰次數用完／提出太遲",
+ sc:"球員在沒有挑戰次數後再挑戰，或者拖了一會兒才說要挑戰。",
+ l:[["P","Challenge!","挑戰！"],
+    ["U","You do not have any challenges remaining in this game.","這一局你已經沒有挑戰次數了。"],
+    ["P","I want to challenge that one!","我要挑戰那一球！"],
+    ["U","You did not challenge immediately.","你沒有立即挑戰。"]],
+ tip:"態度平和、簡短，說完就繼續比賽。"},
+
+/* ===== IRS：結果 ===== */
+{s:"irs",g:"res",ic:"✅",t:"挑戰成功",
+ sc:"回放顯示原判錯誤，挑戰成功，球員不會失去挑戰次數。",
+ l:[["U","Correction, in.","更正：界內。"],
+    ["U","Correction, out.","更正：界外。"]],
+ tip:"然後依更正後的結果報分。成功的挑戰不扣次數。"},
+{s:"irs",g:"res",ic:"❌",t:"挑戰失敗",
+ sc:"回放顯示原判正確，球員失去一次挑戰機會。同一局失敗兩次，就不能再挑戰。",
+ l:[["U","Challenge unsuccessful. One challenge remaining.","挑戰失敗。還剩一次挑戰。"],
+    ["U","Challenge unsuccessful. No challenges remaining.","挑戰失敗。沒有挑戰次數了。"]],
+ tip:"每一局重新計算挑戰次數。"},
+{s:"irs",g:"res",ic:"🔧",t:"IRS 無結果／故障",
+ sc:"系統回放無法判定，或系統暫時故障。",
+ l:[["U","The IRS result was no decision.","IRS 結果是「無法判定」。"],
+    ["U","The IRS is not working; no challenges can be made.","IRS 目前故障；不能提出挑戰。"],
+    ["U","The IRS is now working; challenges can be made.","IRS 已恢復；可以挑戰了。"]],
+ tip:"「無法判定」或系統故障時，不扣任何一方的挑戰次數。系統結果自相矛盾時要叫裁判長。"},
+
+/* ===== 難處理：拖延與球具 ===== */
+{s:"talk",g:"delay",ic:"🧻",t:"拖延時間（擦汗太久）",
+ sc:"球員每個回合後都花很長時間擦汗、整理衣服，拖慢比賽。",
+ l:[["U","Quick towel only.","只准快速擦一下毛巾。"],
+    ["U","No delay.","不要拖延。"],
+    ["U","Play must be continuous.","比賽必須連續進行。"],
+    ["U","Get ready quicker.","動作快一點準備。"],
+    ["U","Play now.","現在開始。"]],
+ tip:"先口頭提醒；持續拖延才進入警告程序。"},
+{s:"talk",g:"delay",ic:"🥤",t:"球員要喝水",
+ sc:"球員想在回合之間喝水。必須得到你的許可，而且只限短暫。",
+ l:[["P","Can I have a drink?","我可以喝水嗎？"],
+    ["U","You must ask my permission to have a drink.","喝水前必須先問我同意。"],
+    ["U","Quick drink only.","只能快速喝一口。"]],
+ tip:"11 分休息和局間休息可以正常喝水。"},
+{s:"talk",g:"delay",ic:"🚪",t:"球員離場／遲遲不回",
+ sc:"球員離場去拿東西，或休息後遲遲不回場。",
+ l:[["U","You left the court without permission.","你未經許可離開場地。"],
+    ["U","Players back on court.","請球員回場。"],
+    ["U","Park Min-jun, back on court.","朴敏俊，請回場。"],
+    ["U","On court.","到場上。"]],
+ tip:"沒有你的許可，球員不應離開場地。"},
+{s:"talk",g:"delay",ic:"🪶",t:"球員要求換球",
+ sc:"球員覺得球太慢或損壞，要求換球。換球由你決定。",
+ l:[["P","The shuttle is too slow. Can we change it?","球太慢了，可以換嗎？"],
+    ["U","You must ask me for permission to change the shuttle.","換球要先得到我的許可。"],
+    ["U","Test the shuttle.","測試一下球。"],
+    ["U","Change the shuttle.","換球。"],
+    ["U","Do not change the shuttle.","不用換球。"],
+    ["U","You must not interfere with the speed of the shuttle.","你不可以改變球的速度。"]],
+ tip:"換球是裁判的決定。如果雙方都要求改變球速，立刻請裁判長。"},
+{s:"talk",g:"delay",ic:"🎾",t:"球拍與裝備",
+ sc:"球員換拍、剪線或整理裝備花太多時間。",
+ l:[["U","You must not take so long to cut your strings.","你剪線不可以花這麼久。"],
+    ["U","Return the shuttle properly.","請好好把球交回。"],
+    ["U","Play must be continuous.","比賽必須連續進行。"]],
+ tip:"不要讓球員在場上測試球拍而拖延比賽。"},
+
+/* ===== 難處理：場地與受傷 ===== */
+{s:"talk",g:"court",ic:"💧",t:"場地濕滑／汗水",
+ sc:"地上有汗水，球員滑倒或抱怨。",
+ l:[["P","The floor is wet.","地面是濕的。"],
+    ["U","Wipe the court, please.","請擦場地。"],
+    ["U","Show the court attendant where to wipe the court.","請指給場務員看要擦哪裡。"],
+    ["U","Use your foot to wipe the court.","請用腳擦一下地面。"],
+    ["U","No sweat throwing.","不可以甩汗。"],
+    ["U","Do not fall intentionally.","不要故意跌倒。"]],
+ tip:"安全第一；但要留意球員藉此拖延時間。"},
+{s:"talk",g:"court",ic:"🩹",t:"球員受傷",
+ sc:"球員突然扭傷或倒地。先評估嚴重程度，必要時舉右手叫裁判長。",
+ l:[["P","Ouch! My ankle!","哎呀！我的腳踝！"],
+    ["U","Are you OK?","你還好嗎？"],
+    ["U","Can you play on?","你能繼續比賽嗎？"],
+    ["U","Do you need the doctor?","你需要醫生嗎？"],
+    ["U","Are you retiring?","你要退賽嗎？"],
+    ["U","The bleeding needs to be treated before you can continue.","流血必須先處理，才能繼續比賽。"]],
+ tip:"流血時比賽要暫停到止血為止。舉右手過頭＝請裁判長。記錄暫停時間。"},
+
+/* ===== 難處理：教練與干擾 ===== */
+{s:"talk",g:"coach",ic:"🧑‍🏫",t:"教練違規",
+ sc:"教練在不能指導的時間喊話，或站起來離開位置。",
+ l:[["U","Coach, return to your chair.","教練，請回到你的座位。"],
+    ["U","Do not coach during the rally.","回合進行中不可指導。"],
+    ["U","Do not coach after the players have taken up position for the next service.","球員就位準備下一次發球後不可指導。"],
+    ["U","Do not step over the A-board.","不可跨過廣告板。"],
+    ["U","Do not get up from your chair until the rally is over.","回合結束前不要離座。"],
+    ["U","Your coach disrupted play.","你的教練干擾了比賽。"]],
+ tip:"教練干擾比賽可以判 let。多次違規要請裁判長處理。"},
+{s:"talk",g:"coach",ic:"🙅",t:"試圖影響線審／發球裁判",
+ sc:"球員在線審判決前大聲喊「In!」或做手勢，試圖影響判決。",
+ l:[["U","You must not influence the Line Judge.","你不可以影響線審。"],
+    ["U","You must not influence the Service Judge.","你不可以影響發球裁判。"],
+    ["U","Do not shout or signal before the Line Judge gives a decision.","線審判決之前不可喊叫或做手勢。"]],
+ tip:"先口頭警告；再犯就走不當行為程序。"},
+
+/* ===== 難處理：不當行為與牌 ===== */
+{s:"talk",g:"card",ic:"🗯️",t:"口頭提醒（給牌之前）",
+ sc:"球員情緒激動。在出示任何牌之前，先叫他過來口頭提醒。",
+ l:[["U","Come here.","請過來。"],
+    ["U","Do not shout at your opponent.","不要對對手大叫。"],
+    ["U","Do not raise your fist towards your opponent.","不要對對手揮拳。"],
+    ["U","You must not scream so loudly.","你不可以這麼大聲尖叫。"],
+    ["U","You must use your best effort.","你必須盡全力比賽。"],
+    ["U","You must shake hands before celebrating.","慶祝前必須先握手。"]],
+ tip:"叫球員過來，冷靜、單獨地說明。不要在小事上太快出牌。"},
+{s:"talk",g:"card",ic:"🟨",t:"黃牌：警告 Warning",
+ sc:"球員行為不當。叫他過來，說明違規行為，舉起黃牌過頭。",
+ l:[["U","Come here.","過來。"],
+    ["U","Park Min-jun, warning for misconduct.","朴敏俊，不當行為警告。"],
+    ["U","Do not shout at your opponent.","不要對對手大叫。"]],
+ tip:"順序：球員姓名 → warning for misconduct → 一句話說明原因 → 舉右手持黃牌過頭。"},
+{s:"talk",g:"card",ic:"🟥",t:"紅牌：判罰犯規 Fault",
+ sc:"已有警告後再次違規。判他 fault，對方得分，並立即叫裁判長。",
+ l:[["U","Come here.","過來。"],
+    ["U","Park Min-jun, fault for misconduct.","朴敏俊，不當行為犯規。"],
+    ["U","You must not scream so loudly.","你不可以這麼大聲尖叫。"]],
+ tip:"舉紅牌過頭，然後舉右手叫裁判長到場，並向裁判長報告。"},
+{s:"talk",g:"card",ic:"⬛",t:"黑牌：取消資格",
+ sc:"裁判長決定取消資格後，把黑牌交給你，你要公布並宣布比賽結果。",
+ l:[["U","Park Min-jun, disqualified for misconduct.","朴敏俊，因不當行為被取消資格。"],
+    ["U","You deliberately distracted your opponent.","你故意干擾對手。"],
+    ["U","Match won by Berg and Lund of Sweden.","比賽由瑞典的貝里和倫德獲勝。"]],
+ tip:"黑牌只有在裁判長同意後才出示。之後要宣布比賽結果與比分。"},
+
+/* ===== 難處理：其他 ===== */
+{s:"talk",g:"misc",ic:"⏸️",t:"暫停比賽（場地問題）",
+ sc:"比賽因場館問題（漏水、燈光、停電）必須暫停，之後再恢復。",
+ l:[["U","Play is suspended.","比賽暫停。"],
+    ["U","Are you ready?","你們準備好了嗎？"],
+    ["U","Eleven, nine; play.","十一比九；開始。"]],
+ tip:"暫停與恢復的時間都要記在記分表上。"},
+{s:"talk",g:"misc",ic:"📟",t:"比分板故障",
+ sc:"比分板顯示錯誤或不亮。",
+ l:[["U","The scoreboard is not working.","比分板無法使用。"]],
+ tip:"通知裁判長，報分時要更清楚、更常重複比分。"},
+{s:"talk",g:"misc",ic:"👕",t:"球員換衣服",
+ sc:"球員中途換了衣服，款式與原來不同。",
+ l:[["U","Your new shirt must be of the same colour and similar design to your original shirt.","你的新球衣必須與原來那件顏色相同、設計相似。"],
+    ["U","Place your bag properly in the basket.","請把袋好好放在籃子裡。"],
+    ["U","Switch off your mobile phone.","請關掉手機。"]],
+ tip:"有疑問時請裁判長決定。"}
+];
+CARDS.forEach((c,i)=>c.id="c"+i);
+
+/* 2025 李寧香港公開賽（Super 500）球員資料
+   n=宣布用英文名 cc=國家代號 cn=中文名 say=給人看的近似讀音 tts=給英文語音唸的字串
+   nat=用母語語音唸的原文 lang=母語語音代碼 lbl=語音標示 no=備註
+   lang 為空＝只有英文近似讀音。 */
+const EVENTS=[
+ ["MS","男子單打 Men's Singles"],
+ ["WS","女子單打 Women's Singles"],
+ ["MD","男子雙打 Men's Doubles"],
+ ["WD","女子雙打 Women's Doubles"],
+ ["XD","混合雙打 Mixed Doubles"]
+];
+const P=(n,cc,cn,say,tts,nat,lang,lbl,no)=>({n,cc,cn,say,tts,nat,lang,lbl,no});
+const PLAYERS={
+MS:[
+ P("Li Shifeng","CHN","李詩灃","LEE shur-FUNG","Lee shur fung","李詩灃","zh-CN","普通話","2025 冠軍"),
+ P("Lakshya Sen","IND","","LUCK-shya SEN","Luck shya Sen","","","","2025 亞軍"),
+ P("Chou Tien-chen","TPE","周天成","JOE tyen-CHEN","Joe tyen chen","周天成","zh-TW","普通話","四強"),
+ P("Christo Popov","FRA","","KREE-sto PO-pov","Kreesto Popov","Christo Popov","fr-FR","法語","四強"),
+ P("Loh Kean Yew","SGP","駱建佑","LAW kee-an-YOO","Law kee an Yoo","","","","八強・閩南語拼音"),
+ P("Kunlavut Vitidsarn","THA","","koon-la-WOOT wi-tit-SARN","koon la woot wi tit sarn","","","","退賽"),
+ P("Kodai Naraoka","JPN","奈良岡功大","koh-DYE na-ra-OH-ka","koh dye na ra oh ka","こうだい ならおか","ja-JP","日語",""),
+ P("Weng Hongyang","CHN","翁泓陽","WUNG hong-YANG","Wung hong yang","翁泓陽","zh-CN","普通話",""),
+ P("Toma Junior Popov","FRA","","TOH-ma PO-pov","Toh ma Popov","Toma Popov","fr-FR","法語",""),
+ P("Viktor Axelsen","DEN","","VIK-tor AX-el-sen","Vik tor Ax el sen","Viktor Axelsen","da-DK","丹麥語","上屆冠軍"),
+ P("Shi Yuqi","CHN","石宇奇","SHUR yoo-CHEE","Shur yoo chee","石宇奇","zh-CN","普通話",""),
+ P("Lee Cheuk Yiu","HKG","李卓耀","LEE cheuk-YIU","Lee cheuk yiu","李卓耀","zh-HK","粵語","香港"),
+ P("Jason Gunawan","HKG","","JAY-son goo-na-WAN","Jay son goo na wan","","","","香港"),
+ P("Ayush Shetty","IND","","AH-yoosh SHET-ty","Ah yoosh Shetty","","","",""),
+ P("H. S. Prannoy","IND","","PRUH-noy","Aitch Ess Pruh noy","","","",""),
+ P("Kiran George","IND","","KI-ran JORJ","Ki ran George","","","","")
+],
+WS:[
+ P("Wang Zhiyi","CHN","王祉怡","WAHNG jr-EE","Wahng jr ee","王祉怡","zh-CN","普通話","2025 冠軍"),
+ P("Han Yue","CHN","韓悅","HAHN ywEH","Hahn yweh","韓悅","zh-CN","普通話","2025 亞軍"),
+ P("Tomoka Miyazaki","JPN","宮崎友花","to-MO-ka mi-ya-ZA-ki","to mo ka mi ya za ki","ともか みやざき","ja-JP","日語","八強"),
+ P("Ratchanok Intanon","THA","","RAT-cha-nok in-ta-NON","Rat cha nok in ta non","","","","八強"),
+ P("Gao Fangjie","CHN","高昉潔","GOW fahng-JYEH","Gow fahng jyeh","高昉潔","zh-CN","普通話","八強"),
+ P("Pornpawee Chochuwong","THA","","porn-pa-WEE cho-choo-WONG","porn pa wee cho choo wong","","","",""),
+ P("Supanida Katethong","THA","","soo-pa-NEE-da kate-TONG","soo pa nee da kate tong","","","",""),
+ P("P. V. Sindhu","IND","","SIN-doo","Pee Vee Sin doo","","","",""),
+ P("Chen Yufei","CHN","陳雨菲","CHEN yoo-FAY","Chen yoo fay","陳雨菲","zh-CN","普通話",""),
+ P("Lo Sin Yan","HKG","盧善彥","LAW sin-YAN","Law sin yan","盧善彥","zh-HK","粵語","香港")
+],
+MD:[
+ P("Liang Weikeng","CHN","梁偉鏗","LYAHNG way-KUNG","Lyahng way kung","梁偉鏗","zh-CN","普通話","2025 冠軍"),
+ P("Wang Chang","CHN","王昶","WAHNG chahng","Wahng chahng","王昶","zh-CN","普通話","2025 冠軍"),
+ P("Satwiksairaj Rankireddy","IND","","sat-wik-sigh-RAJ ran-ki-RED-dy","sat wik sigh raj ran ki reddy","","","","亞軍"),
+ P("Chirag Shetty","IND","","chi-RAAG SHET-ty","chi raag Shetty","","","","亞軍"),
+ P("Sabar Karyaman Gutama","INA","","SA-bar kar-ya-MAN goo-TA-ma","Sabar Karyaman Gutama","Sabar Karyaman Gutama","id-ID","印尼語","八強"),
+ P("Muhammad Reza Pahlevi Isfahani","INA","","RE-za pah-LE-vi is-fa-HA-ni","Reza Pahlevi Isfahani","Reza Pahlevi Isfahani","id-ID","印尼語","八強"),
+ P("Aaron Chia","MAS","謝定峰","AIR-on CHEE-ah","Air on Chee ah","","","","閩南語拼音"),
+ P("Soh Wooi Yik","MAS","蘇偉譯","SAW woo-ee-YIK","Saw woo ee yik","","","","閩南語拼音"),
+ P("Goh Sze Fei","MAS","吳世飛","GO suh-FAY","Go suh fay","","","","閩南語拼音"),
+ P("Nur Izzuddin","MAS","","NOOR iz-zoo-DEEN","Noor Izzuddin","Nur Izzuddin","id-ID","馬來語",""),
+ P("Kim Astrup","DEN","","KIM AH-strup","Kim Astrup","Kim Astrup","da-DK","丹麥語",""),
+ P("Anders Skaarup Rasmussen","DEN","","AN-ers SKOR-up RAS-moo-sen","Anders Skaarup Rasmussen","Anders Skaarup Rasmussen","da-DK","丹麥語",""),
+ P("Fajar Alfian","INA","","FA-jar AL-fee-an","Fajar Alfian","Fajar Alfian","id-ID","印尼語","退賽"),
+ P("Muhammad Rian Ardianto","INA","","REE-an ar-dee-AN-to","Rian Ardianto","Rian Ardianto","id-ID","印尼語","退賽"),
+ P("Man Wei Chong","MAS","萬煒聰","MAHN way-CHONG","Mahn way chong","","","","閩南語拼音"),
+ P("Tee Kai Wun","MAS","鄭凱文","TEE kye-WOON","Tee kye woon","","","","閩南語拼音")
+],
+WD:[
+ P("Jia Yifan","CHN","賈一凡","JYAH ee-FAHN","Jyah ee fahn","賈一凡","zh-CN","普通話","2025 冠軍"),
+ P("Zhang Shuxian","CHN","張殊賢","JAHNG shoo-SHYEN","Jahng shoo shyen","張殊賢","zh-CN","普通話","2025 冠軍"),
+ P("Rin Iwanaga","JPN","岩永鈴","RIN i-wa-NA-ga","Rin i wa na ga","りん いわなが","ja-JP","日語","亞軍"),
+ P("Kie Nakanishi","JPN","中西貴映","KI-e na-ka-NI-shi","Kee eh na ka ni shi","きえ なかにし","ja-JP","日語","亞軍"),
+ P("Pearly Tan","MAS","陳康樂","PEARL-ee TAN","Pearly Tan","","","","四強"),
+ P("Thinaah Muralitharan","MAS","","TEE-nah moo-ra-li-TA-ran","Tee nah moo ra li ta ran","","","","四強"),
+ P("Li Yijing","CHN","李怡婧","LEE ee-JING","Lee ee jing","李怡婧","zh-CN","普通話","八強"),
+ P("Luo Xumin","CHN","羅徐敏","LWOR shoo-MIN","Lwor shoo min","羅徐敏","zh-CN","普通話","八強"),
+ P("Arisa Igarashi","JPN","五十嵐有紗","a-RI-sa i-ga-RA-shi","a ri sa i ga ra shi","ありさ いがらし","ja-JP","日語","八強"),
+ P("Chiharu Shida","JPN","志田千陽","chi-HA-ru SHI-da","chi ha ru shi da","ちはる しだ","ja-JP","日語","八強"),
+ P("Hsieh Pei-shan","TPE","謝沛珊","SHYEH pay-SHAN","Shyeh pay shan","謝沛珊","zh-TW","普通話","八強"),
+ P("Hung En-tzu","TPE","洪恩慈","HOONG en-TSZ","Hoong en tsz","洪恩慈","zh-TW","普通話","八強"),
+ P("Liu Shengshu","CHN","劉聖書","LYOH shung-SHOO","Lyoh shung shoo","劉聖書","zh-CN","普通話",""),
+ P("Tan Ning","CHN","譚寧","TAHN ning","Tahn ning","譚寧","zh-CN","普通話",""),
+ P("Yeung Nga Ting","HKG","楊雅婷","YEUNG nga-TING","Yeung nga ting","楊雅婷","zh-HK","粵語","香港"),
+ P("Yeung Pui Lam","HKG","楊佩霖","YEUNG pui-LAM","Yeung pui lam","楊佩霖","zh-HK","粵語","香港")
+],
+XD:[
+ P("Feng Yanzhe","CHN","馮彥哲","FUNG yen-JUH","Fung yen juh","馮彥哲","zh-CN","普通話","2025 冠軍"),
+ P("Huang Dongping","CHN","黃東萍","HWAHNG dong-PING","Hwahng dong ping","黃東萍","zh-CN","普通話","2025 冠軍"),
+ P("Guo Xinwa","CHN","郭新娃","GWOR shin-WAH","Gwor shin wah","郭新娃","zh-CN","普通話","亞軍"),
+ P("Chen Fanghui","CHN","陳芳卉","CHEN fahng-HWAY","Chen fahng hway","陳芳卉","zh-CN","普通話","亞軍"),
+ P("Jiang Zhenbang","CHN","蔣振邦","JYAHNG jen-BAHNG","Jyahng jen bahng","蔣振邦","zh-CN","普通話","八強"),
+ P("Wei Yaxin","CHN","魏雅欣","WAY yah-SHIN","Way yah shin","魏雅欣","zh-CN","普通話","八強"),
+ P("Tang Chun Man","HKG","鄧俊文","TAHNG chun-MAN","Tahng chun man","鄧俊文","zh-HK","粵語","香港・八強"),
+ P("Tse Ying Suet","HKG","謝影雪","TSE ying-SUET","Tse ying suet","謝影雪","zh-HK","粵語","香港・八強"),
+ P("Jesper Toft","DEN","","YES-per TOFT","Yes per Toft","Jesper Toft","da-DK","丹麥語","八強"),
+ P("Amalie Magelund","DEN","","a-ma-LEE MAH-ge-lun","A ma lee Mah ge lun","Amalie Magelund","da-DK","丹麥語","八強"),
+ P("Dechapol Puavaranukroh","THA","","DAY-cha-pon poo-a-wa-ra-NOO-kroh","Day cha pon poo a wa ra noo kroh","","","",""),
+ P("Supissara Paewsampran","THA","","soo-pit-SA-ra pew-sam-PRAN","soo pit sa ra pew sam pran","","","",""),
+ P("Chen Tang Jie","MAS","陳堂傑","CHEN tahng-JYEH","Chen tahng jyeh","","","","退賽・閩南語拼音"),
+ P("Toh Ee Wei","MAS","杜依蔚","TOH ee-WAY","Toh ee way","","","","退賽・閩南語拼音"),
+ P("Goh Soon Huat","MAS","吳順發","GO soon-HWAT","Go soon hwat","","","","閩南語拼音"),
+ P("Shevon Jemie Lai","MAS","賴洁敏","SHEH-von JEH-mee LYE","Sheh von Jeh mee Lye","","","","閩南語拼音")
+]};
+
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const ls={g(k,d){try{const v=localStorage.getItem("ue_"+k);return v==null?d:JSON.parse(v)}catch(e){return d}},
+          s(k,v){try{localStorage.setItem("ue_"+k,JSON.stringify(v))}catch(e){}}};
+let favs=new Set(ls.g("favs",[])), best=ls.g("best",{}), pitch=ls.g("pitch",1.18), rate=ls.g("rate",0.9);
+
+/* ================= 語音 ================= */
+const FEM=/\b(samantha|karen|moira|tessa|fiona|serena|kate|martha|catherine|zoe|nicky|allison|ava|susan|victoria|zira|hazel|linda|heera|aria|jenny|michelle|sonia|libby|nova|shelley|flo|sandy|female|woman|amelie|emily|joanna|salli|kendra|kimberly|ivy|ruth|olivia|clara|lisa|anna|maria|sara|grandma|princess|bubbles|superstar|whisper|bells|trinoids|karen|veena|rishi f)\b/i;
+const PREF=[/google uk english male/i,/^daniel/i,/^arthur/i,/microsoft (ryan|guy|george|mark)/i,
+            /^aaron\b/i,/^oliver\b/i,/^gordon\b/i,/^alex$/i,/^rishi\b/i,/^tom\b/i,/\bmale\b/i];
+const EXCL=/\b(david|zira|albert|bad news|boing|bahh|cellos|deranged|hysterical|jester|organ|wobble|zarvox|junior|ralph|kathy|good news)\b/i;
+const synth=window.speechSynthesis;
+let voices=[],voiceName=ls.g("voice",""),showAll=ls.g("allv",false);
+function enVoices(){return (synth?synth.getVoices():[]).filter(v=>/^en/i.test(v.lang))}
+function loadVoices(){
+  const all=enVoices();
+  const good=all.filter(v=>!FEM.test(v.name)&&!EXCL.test(v.name));
+  voices=showAll?all.filter(v=>!EXCL.test(v.name)):(good.length?good:all.filter(v=>!EXCL.test(v.name)));
+  if(!voices.length)voices=all;
+  voices.sort((a,b)=>{
+    const r=v=>{for(let i=0;i<PREF.length;i++)if(PREF[i].test(v.name))return i;return 50+(/en-(GB|AU|IE)/i.test(v.lang)?0:1)};
+    return r(a)-r(b);
+  });
+  const sel=$("#vSel");sel.innerHTML="";
+  if(!voices.length){sel.innerHTML="<option>（找不到英文語音）</option>";return}
+  voices.forEach(v=>{const o=document.createElement("option");o.value=v.name;o.textContent=v.name+" ("+v.lang+")";sel.appendChild(o)});
+  if(!voices.find(v=>v.name===voiceName))voiceName=voices[0].name;
+  sel.value=voiceName;
+}
+if(synth){loadVoices();synth.addEventListener?synth.addEventListener("voiceschanged",loadVoices):(synth.onvoiceschanged=loadVoices)}
+$("#vSel").onchange=e=>{voiceName=e.target.value;ls.s("voice",voiceName)};
+$("#allV").checked=showAll;
+$("#allV").onchange=e=>{showAll=e.target.checked;ls.s("allv",showAll);loadVoices()};
+function vFor(who){
+  const m=voices.find(v=>v.name===voiceName)||voices[0];
+  if(who==="U"||!m||voices.length<2)return m;
+  const o=voices.filter(v=>v.name!==m.name);
+  return o[(who==="P"?0:1)%o.length]||m;
+}
+const LFB={"zh-CN":[/^(zh[-_]cn|zh[-_]hans|cmn)/i,/^zh[-_]tw/i],"zh-TW":[/^(zh[-_]tw|zh[-_]hant)/i,/^zh[-_]cn/i],
+ "zh-HK":[/^(zh[-_]hk|yue)/i],"ja-JP":[/^ja/i],"da-DK":[/^da/i],"fr-FR":[/^fr/i],"id-ID":[/^(id|ms|in)/i]};
+function voiceForLang(code){
+  const all=synth?synth.getVoices():[]; if(!all.length||!code)return null;
+  for(const re of (LFB[code]||[new RegExp("^"+code.split("-")[0],"i")]))
+    {const v=all.find(x=>re.test(x.lang));if(v)return v}
+  return null;
+}
+/* ---- 穩健播放層 ---- */
+let lastErr="", keep=[], warmed=false, tok=0;
+function warm(){ if(warmed||!synth)return; warmed=true; try{synth.getVoices();loadVoices()}catch(e){} }
+addEventListener("pointerdown",warm,{capture:true});
+addEventListener("touchstart",warm,{capture:true});
+setInterval(()=>{ if(synth&&synth.speaking&&!synth.paused){try{synth.resume()}catch(e){}} },9000);
+function stop(){tok++;if(synth)try{synth.cancel()}catch(e){}}
+function mkU(text,voice,lang,pitch,rate){
+  const u=new SpeechSynthesisUtterance(String(text));
+  if(voice){try{u.voice=voice}catch(e){} u.lang=voice.lang||lang||"en-GB"} else u.lang=lang||"en-GB";
+  u.rate=rate; u.pitch=pitch; u.volume=1;
+  keep.push(u); if(keep.length>10)keep.shift();
+  return u;
+}
+function speakU(u){
+  return new Promise(res=>{
+    if(!synth){lastErr="瀏覽器不支援語音合成";alert("這個瀏覽器不支援語音播放。Android 請用 Chrome，iPhone 請用 Safari。");return res()}
+    let done=false; const fin=()=>{if(!done){done=true;clearTimeout(tm);res()}};
+    u.onend=fin;
+    u.onerror=e=>{const x=e&&e.error;if(x&&x!=="interrupted"&&x!=="canceled")lastErr=x;fin()};
+    const go=()=>{try{synth.speak(u)}catch(e){lastErr=e.message||"speak() 失敗";fin()}};
+    /* iOS：cancel() 後同一時刻 speak() 會沒聲音，所以只在真的在播時才先取消並稍等 */
+    if(synth.speaking||synth.pending){try{synth.cancel()}catch(e){} setTimeout(go,140)} else go();
+    const tm=setTimeout(fin,20000);
+  });
+}
+function vFor(who){
+  const m=voices.find(v=>v.name===voiceName)||voices[0]||null;
+  if(who==="U"||!m||voices.length<2)return m;
+  const o=voices.filter(v=>v.name!==m.name);
+  return o[(who==="P"?0:1)%o.length]||m;
+}
+function say(text,who){
+  return speakU(mkU(String(text).replace(/;/g,",").replace(/[-\u2013]/g," "),
+    vFor(who),"en-GB",who==="P"?pitch+.15:pitch,rate));
+}
+function sayIn(text,v,lang){ return speakU(mkU(text,v,lang||"en-GB",1,Math.max(.5,rate-.1))); }
+function one(who,t){ return say(t,who); }
+async function all(lines){
+  stop(); await new Promise(r=>setTimeout(r,60));
+  const t=++tok;
+  for(const[w,en]of lines){ if(t!==tok)return; await say(en,w); if(t!==tok)return; await new Promise(r=>setTimeout(r,320)); }
+}
+/* ================= 評分 ================= */
+const W=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+function n2w(n){n=+n;if(n<20)return W[n];const t=["","","twenty","thirty"][Math.floor(n/10)];return n%10?t+" "+W[n%10]:t}
+function norm(s){return String(s).toLowerCase().replace(/\d+/g,m=>+m<=30?n2w(m):m)
+  .replace(/[-–]/g," ").replace(/[^a-z' ]/g," ").split(/\s+/).filter(Boolean)}
+function cmp(target,heard){
+  const a=norm(target),b=norm(heard),n=a.length,m=b.length;
+  const dp=Array.from({length:n+1},()=>new Int16Array(m+1));
+  for(let i=1;i<=n;i++)for(let j=1;j<=m;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]);
+  const ok=Array(n).fill(false);let i=n,j=m;
+  while(i>0&&j>0){if(a[i-1]===b[j-1]){ok[i-1]=true;i--;j--}else if(dp[i-1][j]>=dp[i][j-1])i--;else j--}
+  return{a,ok,score:n?Math.round(ok.filter(Boolean).length/n*100):0};
+}
+function showRes(box,target,heard,id){
+  const r=cmp(target,heard);
+  const msg=r.score>=90?"很清楚，機器幾乎全部聽懂 👍":r.score>=70?"大致可以。紅色的字再練幾次，可先切到「慢」速跟讀。":"機器聽不太懂。先按 ▶ 聽一次，再用慢速逐字跟讀。";
+  box.innerHTML=`<b style="font-size:19px">${r.score}%</b> ${msg}<br>`+
+    r.a.map((w,i)=>`<span class="${r.ok[i]?"ok":"no"}">${w}</span>`).join(" ")+
+    `<br><small style="color:#8a948f">機器聽到：${esc(heard||"（沒有聲音）")}</small>`;
+  if(id&&r.score>(best[id]||0)){best[id]=r.score;ls.s("best",best)}
+}
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let rec=null;
+function mic(btn,target,box,id){
+  if(!SR){box.hidden=false;box.textContent="這個瀏覽器不支援語音辨識。Android 請用 Chrome，iPhone 請用 Safari；也可以改用「⏺ 錄音」自己對照。";return}
+  stop(); if(rec)try{rec.stop()}catch(e){}
+  const r=new SR();r.lang="en-GB";r.interimResults=false;r.maxAlternatives=3;r.continuous=false;rec=r;
+  btn.classList.add("on");box.hidden=false;box.textContent="請開始說…";
+  let got=false;
+  r.onresult=e=>{got=true;let bt=null,bs=-1;
+    for(const alt of e.results[0]){const s=cmp(target,alt.transcript).score;if(s>bs){bs=s;bt=alt.transcript}}
+    showRes(box,target,bt,id)};
+  r.onerror=e=>{got=true;box.textContent=(e.error==="not-allowed"||e.error==="service-not-allowed")
+    ?"麥克風權限被拒絕。請在瀏覽器設定允許使用麥克風（網址必須是 https）。"
+    :"辨識失敗（"+e.error+"）。語音辨識需要連網，請檢查網絡後再試。"};
+  r.onend=()=>{btn.classList.remove("on");rec=null;if(!got)box.textContent="沒有聽到聲音，請再按一次再說。"};
+  try{r.start()}catch(e){box.textContent="無法開始辨識，請再試一次。"}
+}
+let mr=null,ms=null;
+async function recd(btn,box){
+  if(mr&&mr.state==="recording"){mr.stop();return}
+  if(!navigator.mediaDevices||!window.MediaRecorder){box.hidden=false;box.textContent="這個瀏覽器不支援錄音。";return}
+  stop();
+  try{ms=await navigator.mediaDevices.getUserMedia({audio:true})}
+  catch(e){box.hidden=false;box.textContent="麥克風權限被拒絕。請在瀏覽器設定允許使用麥克風（網址必須是 https）。";return}
+  const ch=[];mr=new MediaRecorder(ms);
+  mr.ondataavailable=e=>ch.push(e.data);
+  mr.onstop=()=>{btn.classList.remove("on");ms.getTracks().forEach(t=>t.stop());
+    box.hidden=false;box.innerHTML="你的錄音：<audio controls src=\""+URL.createObjectURL(new Blob(ch,{type:mr.mimeType||"audio/webm"}))+"\"></audio>"};
+  mr.start();btn.classList.add("on");box.hidden=false;box.textContent="🔴 錄音中…再按一次停止";
+}
+
+/* ================= 畫面 ================= */
+function lineHTML(w,en,zh,i){
+  const mine=w==="U";
+  return `<div class="line" data-i="${i}">
+    <div class="lh"><span class="who" style="background:var(--${w})">${WHO[w]}</span><span class="sp"></span>
+      ${mine?`<button class="b gh2 d-rec">⏺ 錄音</button><button class="b gh2 d-mic">🎤 跟讀</button>`:""}
+      <button class="b play d-play">▶</button></div>
+    <div class="en">${esc(en)}</div><div class="zh">${esc(zh)}</div>
+    ${mine?`<div class="res" hidden></div>`:""}</div>`;
+}
+function cardHTML(c){
+  return `<article class="card" data-card="${c.id}">
+    <h2><span>${c.ic}</span><span class="tt">${esc(c.t)}</span>
+      <button class="fav" data-fav="${c.id}">${favs.has(c.id)?"★":"☆"}</button></h2>
+    <div class="scene">📍 ${esc(c.sc)}</div>
+    ${c.l.map((x,i)=>lineHTML(x[0],x[1],x[2],i)).join("")}
+    ${c.l.length>1?`<button class="wide-b d-all">▶ 全部播放（對話）</button>`:""}
+    ${c.tip?`<div class="tip">💡 ${esc(c.tip)}</div>`:""}</article>`;
+}
+function vHome(){
+  $("#ttl").textContent="🏸 裁判英語";
+  const t=SECTIONS.map(s=>`<button class="tile" data-go="s-${s.id}"><span class="ic">${s.ic}</span>
+    <span class="n">${s.n}</span><span class="d">${s.d}</span>
+    <span class="ct">${CARDS.filter(c=>c.s===s.id).length} 個情境</span></button>`).join("");
+  return `<div class="lead">點一個主題開始。每個情境都有場景說明、▶ 標準發音、中文翻譯，裁判自己的台詞還可以 🎤 跟讀評分。</div>
+  <div class="tiles">${t}
+    <button class="tile wide" data-go="players"><span class="ic">👥</span><span class="tx">
+      <span class="n">球員姓名讀音</span><span class="d">2025 香港公開賽球員名單・姓名怎麼唸</span></span></button>
+    <button class="tile wide" data-go="tool"><span class="ic">🔢</span><span class="tx">
+      <span class="n">報分器</span><span class="d">任何比分即時唸出，可跟讀</span></span></button>
+    <button class="tile wide" data-go="fav"><span class="ic">⭐</span><span class="tx">
+      <span class="n">我的收藏</span><span class="d">${favs.size?favs.size+" 個情境":"還沒有收藏"}</span></span></button>
+  </div>
+  <div class="note" style="margin-top:14px">📖 用語整理自 BWF《Vocabulary》（4.1.5）、《裁判指引 ITTO》（4.1.1）及《IRS》（4.1.8）。卡內人名為虛構示範，中文翻譯與提示為整理所得。正式比賽前請對照最新版本與賽事裁判長的指示。</div>`;
+}
+function rowHTML(c){
+  return `<button class="row" data-go="${c.id}"><span class="ic">${c.ic}</span>
+    <span class="tx"><span class="t">${esc(c.t)}</span><span class="d">${esc(c.sc)}</span></span>
+    ${favs.has(c.id)?'<span class="st">★</span>':""}<span class="ar">›</span></button>`;
+}
+function vSection(id){
+  const s=SECTIONS.find(x=>x.id===id); if(!s)return vHome();
+  $("#ttl").textContent=s.ic+" "+s.n;
+  return s.g.map(([gid,gn])=>{
+    const cs=CARDS.filter(c=>c.s===id&&c.g===gid);
+    return cs.length?`<div class="gh">${gn}</div>`+cs.map(rowHTML).join(""):"";
+  }).join("");
+}
+function vFav(){
+  $("#ttl").textContent="⭐ 我的收藏";
+  const cs=CARDS.filter(c=>favs.has(c.id));
+  return cs.length?cs.map(rowHTML).join(""):`<div class="empty">還沒有收藏。<br>打開任何情境，按右上角的 ☆ 就會加進來。</div>`;
+}
+let curList=[];
+function vCard(id){
+  const c=CARDS.find(x=>x.id===id); if(!c)return vHome();
+  $("#ttl").textContent=c.t;
+  const i=curList.indexOf(id), p=i>0?curList[i-1]:null, n=i>=0&&i<curList.length-1?curList[i+1]:null;
+  return cardHTML(c)+`<div class="nav">
+    <button data-go="${p||""}" ${p?"":"disabled"}>‹ 上一個</button>
+    <button data-go="${n||""}" ${n?"":"disabled"}>下一個 ›</button></div>`;
+}
+function plHTML(p){
+  const v=p.lang?voiceForLang(p.lang):null;
+  const sub=[p.cn,p.no].filter(Boolean).join("・");
+  return `<div class="pl" data-tts="${esc(p.tts)}" data-nat="${esc(p.nat||"")}" data-lang="${esc(p.lang||"")}">
+    <div class="tx"><div class="nm">${esc(p.n)}<span class="cc">${p.cc}</span></div>
+      <div class="ph">🗣 ${esc(p.say)}</div>
+      ${sub?`<div class="cn">${esc(sub)}</div>`:""}</div>
+    <div class="bar2"><span class="sp"></span>
+      ${v?`<button class="b p-nat">▶ ${esc(p.lbl)}</button>`:""}
+      <button class="b gh2 p-en">▶ 英文近似</button></div>
+    ${p.lang&&!v?`<div class="miss">這部手機沒有安裝${esc(p.lbl)}語音，只能聽英文近似讀音。裝了之後重新整理這一頁就會出現。</div>`:""}
+  </div>`;
+}
+let evt=ls.g("evt","MS");
+function vPlayers(){
+  $("#ttl").textContent="👥 球員姓名讀音";
+  const tabs=EVENTS.map(([k,n])=>`<button data-evt="${k}" class="${k===evt?"on":""}">${n.split(" ")[0]}</button>`).join("");
+  const list=(PLAYERS[evt]||[]).map(plHTML).join("");
+  return `<div class="note"><b>兩個播放鍵</b>：綠色那個用<b>球員自己的語言</b>唸（普通話、粵語、日語、丹麥語、印尼語），聽到的是真正的讀音，他照著模仿；白色「英文近似」是在英文宣布時可以怎麼唸。<br>
+    🗣 那一行大寫的是重音。<br>
+    馬來西亞、新加坡的華人球員，BWF 姓名是閩南語或粵語拼音，宣布時照英文拼法唸，所以只有英文近似讀音。泰國與印度球員同理。<br>
+    ⚠️ 讀音與中文名為整理所得，<b>不是 BWF 官方發音指引</b>。賽前請在裁判會議上向裁判長索取官方讀音表核對。名單為 2025 年香港公開賽的種子與主要球員，不是完整報名表。記分表上姓氏用大寫，宣布時照記分表唸。</div>
+    <div class="evt">${tabs}</div>
+    <div style="font-size:13px;color:var(--mut);margin:0 4px 9px">${EVENTS.find(e=>e[0]===evt)[1]}・${(PLAYERS[evt]||[]).length} 人</div>
+    ${list}`;
+}
+function vTool(){
+  $("#ttl").textContent="🔢 報分器";
+  const o=Array.from({length:31},(_,i)=>`<option value="${i}">${i}</option>`).join("");
+  return `<div class="card">
+    <div class="scene">📍 練習任何比分的唸法。發球方的分數先報。</div>
+    <div class="grid2"><div><label>發球方</label><select id="ts">${o}</select></div>
+      <div><label>另一方</label><select id="tr">${o}</select></div></div>
+    <div class="fw"><label>情況</label><select id="tm">
+      <option value="n">一般報分</option><option value="so">Service over 換發球</option>
+      <option value="gp">局點 Game point</option><option value="mp">賽點 Match point</option>
+      <option value="iv">11 分休息 Interval</option><option value="ce">休息＋換邊（決勝局）</option>
+      <option value="g1">第一局結束宣布</option><option value="mw">比賽結束宣布</option></select></div>
+    <div class="out" id="tout"></div>
+    <div class="lh"><span class="sp"></span><button class="b gh2" id="tmic">🎤 跟讀</button><button class="b play" id="tplay">▶</button></div>
+    <div class="res" id="tres" hidden></div></div>`;
+}
+function scoreText(s,r,m){
+  const w=n=>n===0?"love":n2w(n);
+  const sc=s===r?(s===0?"love all":w(s)+" all"):w(s)+", "+w(r);
+  const pt=k=>s===r?`${w(s)} ${k} all`:`${w(s)} ${k} ${w(r)}`;
+  if(m==="so")return "Service over; "+sc;
+  if(m==="gp")return pt("game point");
+  if(m==="mp")return pt("match point");
+  if(m==="iv")return sc+"; interval";
+  if(m==="ce")return sc+"; interval, change ends";
+  if(m==="g1")return `Game. First game won by Tanaka of Japan, ${w(Math.max(s,r))} ${w(Math.min(s,r))}.`;
+  if(m==="mw")return `Match won by Tanaka of Japan, ${w(Math.max(s,r))} ${w(Math.min(s,r))}.`;
+  return sc;
+}
+function vSearch(q){
+  $("#ttl").textContent="🔍 搜尋";
+  const k=q.toLowerCase();
+  const cs=CARDS.filter(c=>(c.t+c.sc+(c.tip||"")+c.l.map(x=>x[1]+x[2]).join(" ")).toLowerCase().includes(k));
+  const ps=[];
+  for(const[ev,arr]of Object.entries(PLAYERS))arr.forEach(p=>{
+    if((p.n+p.say+p.cn+p.cc).toLowerCase().includes(k))ps.push([ev,p])});
+  if(!cs.length&&!ps.length)return `<div class="empty">找不到「${esc(q)}」</div>`;
+  return (cs.length?`<div class="gh">情境（${cs.length}）</div>`+cs.map(rowHTML).join(""):"")+
+    (ps.length?`<div class="gh">球員（${ps.length}）</div>`+ps.map(([ev,p])=>plHTML(p)).join(""):"");
+}
+
+/* ================= 路由 ================= */
+function go(h){location.hash=h}
+function render(){
+  stop();
+  const h=(location.hash||"#home").slice(1);
+  const q=$("#q").value.trim();
+  let html;
+  if(q&&$("#pSearch").classList.contains("open")){html=vSearch(q);$("#back").hidden=false}
+  else if(h==="home"||!h){html=vHome();$("#back").hidden=true}
+  else if(h==="players"){html=vPlayers();$("#back").hidden=false}
+  else if(h==="tool"){html=vTool();$("#back").hidden=false}
+  else if(h==="fav"){curList=CARDS.filter(c=>favs.has(c.id)).map(c=>c.id);html=vFav();$("#back").hidden=false}
+  else if(h.startsWith("s-")){const id=h.slice(2);curList=CARDS.filter(c=>c.s===id).map(c=>c.id);html=vSection(id);$("#back").hidden=false}
+  else if(h.startsWith("c")){html=vCard(h);$("#back").hidden=false}
+  else{html=vHome();$("#back").hidden=true}
+  $("#main").innerHTML=html;
+  window.scrollTo(0,0);
+  if(h==="tool"&&!q)bindTool();
+}
+function bindTool(){
+  const up=()=>{const t=scoreText(+$("#ts").value,+$("#tr").value,$("#tm").value);$("#tout").textContent=t;return t};
+  ["ts","tr","tm"].forEach(i=>$("#"+i).onchange=up);
+  $("#ts").value=11;$("#tr").value=9;up();
+  $("#tplay").onclick=()=>one("U",up());
+  $("#tmic").onclick=e=>mic(e.currentTarget,up(),$("#tres"),null);
+}
+addEventListener("hashchange",render);
+$("#back").onclick=()=>{
+  if($("#q").value.trim()&&$("#pSearch").classList.contains("open")){$("#q").value="";$("#pSearch").classList.remove("open");$("#bSearch").classList.remove("on");render();return}
+  const h=(location.hash||"#home").slice(1);
+  if(h.startsWith("c")){const c=CARDS.find(x=>x.id===h);go(c?("s-"+c.s):"home")}
+  else go("home");
+};
+$("#bSearch").onclick=()=>{const p=$("#pSearch"),o=p.classList.toggle("open");
+  $("#bSearch").classList.toggle("on",o);$("#pSet").classList.remove("open");$("#bSet").classList.remove("on");
+  if(o)$("#q").focus();else{$("#q").value="";render()}};
+$("#bSet").onclick=()=>{const p=$("#pSet"),o=p.classList.toggle("open");
+  $("#bSet").classList.toggle("on",o);$("#pSearch").classList.remove("open");$("#bSearch").classList.remove("on")};
+let qt;$("#q").oninput=()=>{clearTimeout(qt);qt=setTimeout(render,200)};
+$("#bEn").onchange=e=>document.body.classList.toggle("hide-en",e.target.checked);
+$("#bZh").onchange=e=>document.body.classList.toggle("hide-zh",!e.target.checked);
+function segBind(sel,set){$(sel).onclick=e=>{const b=e.target.closest("button");if(!b)return;
+  $(sel).querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));set(+b.dataset.v)}}
+segBind("#segPitch",v=>{pitch=v;ls.s("pitch",v)});
+segBind("#segRate",v=>{rate=v;ls.s("rate",v)});
+$("#segPitch").querySelectorAll("button").forEach(b=>b.classList.toggle("on",+b.dataset.v===pitch));
+$("#segRate").querySelectorAll("button").forEach(b=>b.classList.toggle("on",+b.dataset.v===rate));
+
+function diagText(){
+  const all=synth?synth.getVoices():[];
+  const has=c=>voiceForLang(c)?("✅ "+voiceForLang(c).name):"❌ 未安裝";
+  return ["網址協定："+location.protocol+(location.protocol==="https:"?" ✅":" ⚠️ 必須是 https 或 localhost"),
+   "語音合成："+(synth?"✅ 支援":"❌ 不支援"),
+   "系統語音總數："+all.length+(all.length?"":"　⚠️ 一個都沒有＝系統未安裝語音"),
+   "可用英文語音："+voices.length+(voices.length?"（"+voices.slice(0,3).map(v=>v.name).join("、")+"…）":""),
+   "普通話："+has("zh-CN"),"粵語："+has("zh-HK"),"日語："+has("ja-JP"),
+   "丹麥語："+has("da-DK"),"印尼語："+has("id-ID"),
+   "最近錯誤："+(lastErr||"（沒有）")].join("\n");
+}
+$("#dInfo").onclick=()=>{loadVoices();$("#diag").textContent=diagText()};
+$("#dBtn").onclick=()=>{
+  lastErr="";
+  $("#diag").textContent="播放中…";
+  speakU(mkU("Love all, play.",vFor("U"),"en-GB",pitch,rate)).then(()=>{
+    $("#diag").textContent=(lastErr?"❌ 沒有播出："+lastErr:"✅ 已送出播放指令。如果仍然沒聲音，請檢查手機靜音鍵與音量。")+"\n\n"+diagText();
+  });
+};
+$("#main").onclick=e=>{
+  const t=e.target;
+  const en=t.closest(".en");
+  if(en&&document.body.classList.contains("hide-en")){en.classList.toggle("show");return}
+  const ev=t.closest("[data-evt]");
+  if(ev){evt=ev.dataset.evt;ls.s("evt",evt);render();return}
+  const pn=t.closest(".p-nat");
+  if(pn){const d=pn.closest(".pl").dataset;sayIn(d.nat,voiceForLang(d.lang),d.lang);return}
+  const pe=t.closest(".p-en");
+  if(pe){one("U",pe.closest(".pl").dataset.tts);return}
+  const fv=t.closest("[data-fav]");
+  if(fv){const id=fv.dataset.fav;favs.has(id)?favs.delete(id):favs.add(id);ls.s("favs",[...favs]);
+    fv.textContent=favs.has(id)?"★":"☆";return}
+  const card=t.closest("[data-card]");
+  if(card){
+    const c=CARDS.find(x=>x.id===card.dataset.card);
+    if(t.closest(".d-all")){all(c.l);return}
+    const ln=t.closest(".line");
+    if(ln){const[w,en2]=c.l[+ln.dataset.i],box=ln.querySelector(".res");
+      if(t.closest(".d-play"))one(w,en2);
+      else if(t.closest(".d-mic"))mic(t.closest(".d-mic"),en2,box,c.id);
+      else if(t.closest(".d-rec"))recd(t.closest(".d-rec"),box);
+      return}
+  }
+  const g=t.closest("[data-go]");
+  if(g&&g.dataset.go)go(g.dataset.go);
+};
+render();
+</script>
+</body>
+</html>
